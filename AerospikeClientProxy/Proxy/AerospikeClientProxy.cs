@@ -204,13 +204,15 @@ namespace Aerospike.Client.Proxy
 			{
 				HttpHandler = handler,
                 DisposeHttpClient = true, //Make sure we dispose of SocketsHttpHandler (handler) when the channel is disposed
-				ThrowOperationCanceledOnCancellation = true,
+				// ThrowOperationCanceledOnCancellation = false,
+				UnsafeUseInsecureChannelCallCredentials = true,
                 Credentials = hosts[0].tlsName == null
 								? null
 								: ChannelCredentials.Create(new SslCredentials(), credentials),
 				LoggerFactory = loggerFactory,
 				MaxReceiveMessageSize = 128 * 1024 * 1024,
-				MaxRetryBufferSize = 128 * 1024 * 1024              
+				MaxRetryBufferSize = 128 * 1024 * 1024,
+
             });
 
 			this.AuthTokenManager.SetChannel(Channel);
